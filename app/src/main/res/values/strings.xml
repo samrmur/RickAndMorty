@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Rick and Morty Information</string>
+
+    <!-- Basic Strings -->
+    <string name="content_description">Basic Content Description</string>
+
+    <!-- Drawer Strings -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- Title Strings -->
+    <string name="title_characters">Characters</string>
+    <string name="title_locations">Locations</string>
+    <string name="title_episodes">Episodes</string>
+
+    <!-- Character Strings -->
+    <string name="msg_character_status">Status: %1$s</string>
+    <string name="msg_character_species">Species: %1$s</string>
+    <string name="msg_character_origin">Origin: %1$s</string>
+
+    <!-- Error Strings -->
+    <string name="error_generic_message">An Error has occurred!</string>
+    <string name="error_network_state">Failed to get information, retry?</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="border_circle_image">2dp</dimen>
+    <dimen name="start_divider_margin">100dp</dimen>
+</resources>

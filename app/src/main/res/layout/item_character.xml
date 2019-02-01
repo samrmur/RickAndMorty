@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    xmlns:tools="http://schemas.android.com/tools">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="10dp"
+        app:civ_border_width="@dimen/border_circle_image"
+        app:civ_border_color="@android:color/black"
+        android:layout_centerVertical="true"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/image">
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            style="@style/ItemTitle"
+            android:layout_height="wrap_content"
+            tools:text="Some Name"/>
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            style="@style/ItemText"
+            tools:text="Status: Alive"/>
+        <TextView
+            android:id="@+id/species"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/status"
+            style="@style/ItemText"
+            tools:text="Species: Human"/>
+        <TextView
+            android:id="@+id/origin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/species"
+            style="@style/ItemText"
+            tools:text="Origin: Earth"/>
+    </RelativeLayout>
+</RelativeLayout>
