@@ -3,6 +3,7 @@ package com.saam.rickandmorty.api.services
 import com.saam.rickandmorty.api.models.Character
 import com.saam.rickandmorty.api.models.CharacterList
 import io.reactivex.Observable
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -17,6 +18,9 @@ interface CharactersService {
         @Query("type") type: String? = null,
         @Query("gender") gender: String? = null
     ): Observable<CharacterList>
+
+    @GET("character/")
+    fun getCharactersByPageAsync(@Query("page") pageNum: Int): Deferred<CharacterList>
 
     @GET("character/{id}")
     fun getCharacter(

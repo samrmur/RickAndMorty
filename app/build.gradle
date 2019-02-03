@@ -8,7 +8,7 @@ android {
     buildToolsVersion versions.buildTools
 
     defaultConfig {
-        applicationId "com.saam.engent"
+        applicationId "com.saam.rickandmorty"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         multiDexEnabled true
@@ -74,6 +74,7 @@ dependencies {
 
     implementation libraries.okhttpLogger
     implementation libraries.retrofit
+    implementation libraries.coroutineRetro
     implementation libraries.moshi
     implementation libraries.moshiConverter
     implementation libraries.kotshiApi

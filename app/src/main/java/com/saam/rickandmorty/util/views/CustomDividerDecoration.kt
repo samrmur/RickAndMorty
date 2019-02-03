@@ -24,7 +24,7 @@ class CustomDividerDecoration constructor(
         val right = parent.width - parent.paddingRight - end_margin
 
         val childCount = parent.childCount
-        for (i in 0 until childCount) {
+        for (i in 0 until childCount - 1) {
             val child = parent.getChildAt(i)
 
             val params = child.layoutParams as RecyclerView.LayoutParams

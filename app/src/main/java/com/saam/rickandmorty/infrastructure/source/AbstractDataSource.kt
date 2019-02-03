@@ -3,21 +3,20 @@ package com.saam.rickandmorty.infrastructure.source
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.saam.rickandmorty.infrastructure.adapter.NetworkState
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Action
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-abstract class AbstractDataSource<T>: PageKeyedDataSource<Int, T>() {
+abstract class AbstractDataSource<T>: PageKeyedDataSource<Int, T>(), CoroutineScope {
     protected val initialState = MutableLiveData<NetworkState>()
     protected val networkState = MutableLiveData<NetworkState>()
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    protected var retry: Completable? = null
+    private var retryCallback: (() -> Unit)? = null
+    private val job: Job = Job()
 
     // This function is not needed, data is loaded and stored linearly, nothing should be lost
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, T>) {}
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 
     /**
      * Returns the initial network state
@@ -35,24 +34,21 @@ abstract class AbstractDataSource<T>: PageKeyedDataSource<Int, T>() {
      * Attempts to retry fetching data from the server
      */
     fun retry() {
-        retry?.let { completable ->
-            compositeDisposable.add(completable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({}, {
-                    throwable -> Timber.e("ERROR: %s", throwable.message)
-                }))
-        }
+        retryCallback?.let { retry -> this.launch(coroutineContext) { retry() } }
+    }
+
+    fun cancel() {
+        coroutineContext.cancel()
     }
 
     /**
      * Sets the retry action
      * @action Action
      */
-    protected fun setRetry(action: Action?) {
+    protected fun setRetry(action: (() -> Unit)?) {
         if (action == null)
-            this.retry = null
+            this.retryCallback = null
         else
-            this.retry = Completable.fromAction(action)
+            this.retryCallback = action
     }
 }

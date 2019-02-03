@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp">
-    <TextView
-        android:id="@+id/error_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
     <ProgressBar
         android:id="@+id/loading_bar"
         style="?android:attr/progressBarStyle"
+        android:indeterminateTint="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-    <Button
+        android:layout_centerInParent="true" />
+    <TextView
         android:id="@+id/retry_button"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/ErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:text="@string/error_network_state" />
-</LinearLayout>
+</RelativeLayout>

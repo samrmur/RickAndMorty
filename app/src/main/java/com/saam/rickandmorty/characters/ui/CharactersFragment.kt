@@ -20,7 +20,7 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_characters.*
 import javax.inject.Inject
 
-class CharactersFragment: Fragment() {
+class CharactersFragment: Fragment(), View.OnClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -50,11 +50,17 @@ class CharactersFragment: Fragment() {
         setupViews()
     }
 
+    override fun onClick(view: View) {
+        viewModel.retry()
+    }
+
     private fun setupAdapter() {
         adapter = CharactersAdapter { viewModel.retry() }
     }
 
     private fun setupViews() {
+        error_message.setOnClickListener(this)
+
         with(characters) {
             adapter = this@CharactersFragment.adapter
             layoutManager = LinearLayoutManager(this.context)
@@ -78,9 +84,15 @@ class CharactersFragment: Fragment() {
 
     private fun setViewVisibility(state: NetworkState) {
         when(state.status) {
-            NetworkStatus.RUNNING -> loading_bar.visibility = View.VISIBLE
+            NetworkStatus.RUNNING -> {
+                loading_bar.visibility = View.VISIBLE
+                error_message.visibility = View.GONE
+            }
             NetworkStatus.SUCCESS -> loading_bar.visibility = View.GONE
-            NetworkStatus.FAILED -> loading_bar.visibility = View.GONE
+            NetworkStatus.FAILED -> {
+                loading_bar.visibility = View.GONE
+                error_message.visibility = View.VISIBLE
+            }
         }
     }
 }

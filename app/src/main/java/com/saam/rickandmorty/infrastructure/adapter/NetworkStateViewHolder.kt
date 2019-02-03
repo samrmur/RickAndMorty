@@ -24,9 +24,6 @@ class NetworkStateViewHolder(
     }
 
     fun bindTo(networkState: NetworkState?) {
-        if (networkState?.message != null) itemView.error_message.text = networkState.message
-
-        itemView.error_message.visibility = if (networkState?.message != null) View.VISIBLE else View.GONE
         itemView.retry_button.visibility = if (networkState?.status == NetworkStatus.FAILED) View.VISIBLE else View.GONE
         itemView.loading_bar.visibility = if (networkState?.status == NetworkStatus.RUNNING) View.VISIBLE else View.GONE
     }

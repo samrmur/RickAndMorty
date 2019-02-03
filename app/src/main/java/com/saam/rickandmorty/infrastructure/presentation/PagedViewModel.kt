@@ -22,6 +22,11 @@ open class PagedViewModel<T, Y: AbstractDataSource<T>> constructor(
         livePagedList = LivePagedListBuilder<Int, T>(sourceFactory, config).build()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        sourceFactory.getLiveSource().value?.cancel()
+    }
+
     fun getCharacterList(): LiveData<PagedList<T>> = livePagedList
 
     fun getNetworkState(): LiveData<NetworkState> {

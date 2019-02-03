@@ -1,5 +1,6 @@
 package com.saam.rickandmorty.core.module
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.saam.rickandmorty.BuildConfig
 import com.saam.rickandmorty.api.services.CharactersService
 import com.saam.rickandmorty.api.services.EpisodesService
@@ -50,6 +51,7 @@ class NetworkModule {
             .baseUrl(BuildConfig.BaseUrl)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client)
             .build()
     }
