@@ -1,6 +1,7 @@
 package com.saam.rickandmorty.characters.source
 
 import com.saam.rickandmorty.api.models.Character
+import com.saam.rickandmorty.api.models.CharacterPage
 import com.saam.rickandmorty.api.services.CharactersService
 import com.saam.rickandmorty.infrastructure.source.AbstractDataSource
 import com.saam.rickandmorty.infrastructure.adapter.NetworkState
@@ -11,7 +12,7 @@ class CharactersDataSource constructor(
     private val charactersService: CharactersService
 ): AbstractDataSource<Character>() {
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Character>) {
-        Timber.d("Loading page: %d", 1)
+        Timber.d("Loading Characters Page: %d", 1)
 
         networkState.postValue(NetworkState.LOADING)
         initialState.postValue(NetworkState.LOADING)
@@ -24,10 +25,9 @@ class CharactersDataSource constructor(
                 networkState.postValue(NetworkState.LOADED)
                 initialState.postValue(NetworkState.LOADED)
 
-                Timber.d("Page Loaded: %d", 1)
+                Timber.d("Characters Page Loaded: %d", 1)
 
-                if (!characters.info.next.isEmpty())
-                    callback.onResult(characters.results, null, 2)
+                callback.onResult(characters.results, null, nextPage(characters, 1))
             } catch(err: Exception) {
                 setRetry { loadInitial(params, callback) }
                 val error = NetworkState.error(err.message)
@@ -38,7 +38,7 @@ class CharactersDataSource constructor(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Character>) {
-        Timber.d("Loading page: %d", params.key)
+        Timber.d("Loading Characters Page: %d", params.key)
 
         networkState.postValue(NetworkState.LOADING)
 
@@ -49,14 +49,16 @@ class CharactersDataSource constructor(
                 setRetry(null)
                 networkState.postValue(NetworkState.LOADED)
 
-                Timber.d("Page Loaded: %d", params.key)
+                Timber.d("Characters Page Loaded: %d", params.key)
 
                 if (!characters.info.next.isEmpty())
-                    callback.onResult(characters.results, params.key + 1)
+                    callback.onResult(characters.results, nextPage(characters, params.key))
             } catch(err: Exception) {
                 setRetry { loadAfter(params, callback) }
                 networkState.postValue(NetworkState.error(err.message))
             }
         }
     }
+
+    private fun nextPage(page: CharacterPage, pageNum: Int) = if (!page.info.next.isEmpty()) pageNum + 1 else null
 }

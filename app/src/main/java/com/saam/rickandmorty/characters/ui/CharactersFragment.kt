@@ -15,6 +15,7 @@ import com.saam.rickandmorty.characters.presentation.CharactersViewModel
 import com.saam.rickandmorty.core.module.viewmodel.ViewModelFactory
 import com.saam.rickandmorty.infrastructure.adapter.NetworkState
 import com.saam.rickandmorty.infrastructure.adapter.NetworkStatus
+import com.saam.rickandmorty.nav.ui.NavActivity
 import com.saam.rickandmorty.util.views.CustomDividerDecoration
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_characters.*
@@ -59,6 +60,8 @@ class CharactersFragment: Fragment(), View.OnClickListener {
     }
 
     private fun setupViews() {
+        (activity as NavActivity).setTitle(getString(R.string.title_characters))
+
         error_message.setOnClickListener(this)
 
         with(characters) {
@@ -77,8 +80,8 @@ class CharactersFragment: Fragment(), View.OnClickListener {
             adapter.setNetworkState(state)
         })
 
-        viewModel.getCharacterList().observe(this, Observer<PagedList<Character>> { state ->
-            adapter.submitList(state)
+        viewModel.getDataList().observe(this, Observer<PagedList<Character>> { data ->
+            adapter.submitList(data)
         })
     }
 

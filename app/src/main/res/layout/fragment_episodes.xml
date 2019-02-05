@@ -9,4 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_episode" />
+    <ProgressBar
+        android:id="@+id/loading_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@android:color/black"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/error_message"
+        style="@style/ErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/error_network_state"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>

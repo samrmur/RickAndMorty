@@ -1,102 +1,65 @@
 package com.saam.rickandmorty.episodes.source
 
-import androidx.paging.PageKeyedDataSource
-import io.reactivex.disposables.CompositeDisposable
-import androidx.lifecycle.MutableLiveData
 import com.saam.rickandmorty.api.models.Episode
+import com.saam.rickandmorty.api.models.EpisodePage
 import com.saam.rickandmorty.api.services.EpisodesService
-import com.saam.rickandmorty.infrastructure.filters.EpisodeFilter
 import com.saam.rickandmorty.infrastructure.adapter.NetworkState
+import com.saam.rickandmorty.infrastructure.source.AbstractDataSource
 import timber.log.Timber
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Action
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
 class EpisodesDataSource constructor(
-        private val episodesService: EpisodesService,
-        private var episodeFilter: EpisodeFilter
-): PageKeyedDataSource<Int, Episode>() {
-    private val initialLoad = MutableLiveData<NetworkState>()
-    private val networkState = MutableLiveData<NetworkState>()
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    private var retryCompletable: Completable? = null
-
+    private val episodesService: EpisodesService
+): AbstractDataSource<Episode>() {
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Episode>) {
-        Timber.d("Loading page: %d", 1)
+        Timber.d("Loading Episodes Page: %d", 1)
 
         networkState.postValue(NetworkState.LOADING)
-        initialLoad.postValue(NetworkState.LOADING)
-        compositeDisposable.add(episodesService.getEpisodesByPage(
-                1,
-                episodeFilter.name,
-                        episodeFilter.air_date,
-                episodeFilter.episode
+        initialState.postValue(NetworkState.LOADING)
 
-        ).subscribe({ episodes ->
-            setRetry(null)
-            networkState.postValue(NetworkState.LOADED)
-            initialLoad.postValue(NetworkState.LOADED)
+        this.launch(coroutineContext) {
+            try {
+                val episodes = episodesService.getEpisodesByPageAsync(1).await()
 
-            if (episodes.info.next.isEmpty())
-                callback.onResult(episodes.results, null, null)
-            else
-                callback.onResult(episodes.results, null, 2)
-        }, { throwable ->
-            setRetry(Action { loadInitial(params, callback) })
-            val error = NetworkState.error(throwable.message)
-            networkState.postValue(error)
-            initialLoad.postValue(error)
-        }))
+                setRetry(null)
+                networkState.postValue(NetworkState.LOADED)
+                initialState.postValue(NetworkState.LOADED)
+
+                Timber.d("Episodes Page Loaded: %d", 1)
+
+                callback.onResult(episodes.results, null, nextPage(episodes, 1))
+            } catch (err: Exception) {
+                setRetry { loadInitial(params, callback) }
+                val error = NetworkState.error(err.message)
+                networkState.postValue(error)
+                initialState.postValue(error)
+            }
+        }
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Episode>) {
-        Timber.d("Loading page: %d", params.key)
+        Timber.d("Loading Episodes Page: %d", params.key)
 
         networkState.postValue(NetworkState.LOADING)
-        compositeDisposable.add(episodesService.getEpisodesByPage(
-                params.key,
-                episodeFilter.name,
-                episodeFilter.air_date,
-                episodeFilter.episode
 
-        ).subscribe({ episodes ->
-            setRetry(null)
-            networkState.postValue(NetworkState.LOADED)
+        this.launch(coroutineContext) {
+            try {
+                val episodes = episodesService.getEpisodesByPageAsync(params.key).await()
 
-            if (episodes.info.next.isEmpty())
-                callback.onResult(episodes.results, null)
-            else
-                callback.onResult(episodes.results, params.key + 1)
-        }, { throwable ->
-            setRetry(Action { loadAfter(params, callback) })
-            networkState.postValue(NetworkState.error(throwable.message))
-        }))
-    }
+                setRetry(null)
+                networkState.postValue(NetworkState.LOADED)
+                initialState.postValue(NetworkState.LOADED)
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Episode>) {
-        // Do nothing
-    }
+                Timber.d("Episodes Page Loaded: %d", params.key)
 
-    fun getDisposable(): CompositeDisposable = compositeDisposable
-
-    fun getNetworkState(): MutableLiveData<NetworkState> = networkState
-
-    fun retry() {
-        if (retryCompletable != null)
-            compositeDisposable.add(retryCompletable!!
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({}, {
-                        throwable -> Timber.e("ERROR: %s", throwable.message)
-                    }))
-    }
-
-    private fun setRetry(action: Action?) {
-        if (action == null) {
-            this.retryCompletable = null
-        } else {
-            this.retryCompletable = Completable.fromAction(action)
+                callback.onResult(episodes.results, nextPage(episodes, params.key))
+            } catch (err: Exception) {
+                setRetry { loadAfter(params, callback) }
+                val error = NetworkState.error(err.message)
+                networkState.postValue(error)
+            }
         }
     }
+
+    private fun nextPage(page: EpisodePage, pageNum: Int) = if (!page.info.next.isEmpty()) pageNum + 1 else null
 }

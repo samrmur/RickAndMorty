@@ -74,6 +74,7 @@ ext {
             retrofit            : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
             coroutineRetro      : "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${versions.coroutineRetro}",
             moshi               : "com.squareup.moshi:moshi:${versions.moshi}",
+            moshiKotlin         : "com.squareup.moshi:moshi-kotlin:${versions.moshi}",
             moshiConverter      : "com.squareup.retrofit2:converter-moshi:${versions.retrofit}",
             kotshiApi           : "se.ansman.kotshi:api:${versions.kotshi}",
             kotshiCompiler      : "se.ansman.kotshi:compiler:${versions.kotshi}",

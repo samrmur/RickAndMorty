@@ -76,6 +76,7 @@ dependencies {
     implementation libraries.retrofit
     implementation libraries.coroutineRetro
     implementation libraries.moshi
+    implementation libraries.moshiKotlin
     implementation libraries.moshiConverter
     implementation libraries.kotshiApi
     kapt libraries.kotshiCompiler

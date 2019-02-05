@@ -27,7 +27,7 @@ open class PagedViewModel<T, Y: AbstractDataSource<T>> constructor(
         sourceFactory.getLiveSource().value?.cancel()
     }
 
-    fun getCharacterList(): LiveData<PagedList<T>> = livePagedList
+    fun getDataList(): LiveData<PagedList<T>> = livePagedList
 
     fun getNetworkState(): LiveData<NetworkState> {
         return Transformations.switchMap<Y, NetworkState>(

@@ -18,6 +18,11 @@
     <string name="msg_character_species">Species: %1$s</string>
     <string name="msg_character_origin">Origin: %1$s</string>
 
+    <!-- Episode Strings -->
+    <string name="msg_episode_season_number">Season %1$d</string>
+    <string name="msg_episode__number">EP%1$d</string>
+    <string name="msg_episode_air_date">Air Date: %1$s</string>
+
     <!-- Error Strings -->
     <string name="error_generic_message">An Error has occurred!</string>
     <string name="error_network_state">Failed to get information, retry?</string>

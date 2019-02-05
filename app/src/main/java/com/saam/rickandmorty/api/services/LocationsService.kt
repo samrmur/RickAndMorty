@@ -1,7 +1,7 @@
 package com.saam.rickandmorty.api.services
 
 import com.saam.rickandmorty.api.models.Location
-import com.saam.rickandmorty.api.models.LocationList
+import com.saam.rickandmorty.api.models.LocationPage
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,7 +15,7 @@ interface LocationsService {
             @Query("dimension") dimension: String?,
             @Query("type") type: String?
 
-    ): Observable<LocationList>
+    ): Observable<LocationPage>
 
     @GET("location/{id}")
     fun getLocation(

@@ -3,7 +3,7 @@ package com.saam.rickandmorty.api.models
 import se.ansman.kotshi.JsonSerializable
 
 @JsonSerializable
-data class LocationList(
+data class CharacterPage(
     val info: Info,
-    val results: List<Location>
+    val results: List<Character>
 )
