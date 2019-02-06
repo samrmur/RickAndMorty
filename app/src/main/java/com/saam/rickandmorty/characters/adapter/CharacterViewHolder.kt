@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import com.saam.rickandmorty.R
 import com.saam.rickandmorty.api.models.Character
 import com.saam.rickandmorty.infrastructure.adapter.GenericViewHolder
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_character.view.*
 
 class CharacterViewHolder(view: View): GenericViewHolder<Character>(view) {
@@ -21,14 +20,10 @@ class CharacterViewHolder(view: View): GenericViewHolder<Character>(view) {
     override fun bindTo(model: Character?) {
         val resources = itemView.context.resources
 
-        Picasso.get()
-            .load(model?.image)
-            .placeholder(R.drawable.img_placeholder)
-            .into(itemView.image)
-
         itemView.name.text = model?.name
         itemView.status.text = resources.getString(R.string.msg_character_status, model?.status)
         itemView.species.text = resources.getString(R.string.msg_character_species, model?.species)
         itemView.origin.text = resources.getString(R.string.msg_character_origin, model?.origin?.name)
+        itemView.image.setImageURI(model?.image)
     }
 }

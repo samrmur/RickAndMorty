@@ -20,6 +20,7 @@ import com.saam.rickandmorty.nav.ui.NavActivity
 import com.saam.rickandmorty.util.views.CustomDividerDecoration
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_episodes.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class EpisodesFragment: Fragment(), View.OnClickListener {
@@ -96,7 +97,8 @@ class EpisodesFragment: Fragment(), View.OnClickListener {
             NetworkStatus.FAILED -> {
                 loading_bar.visibility = View.GONE
                 error_message.visibility = View.VISIBLE
-                error_message.text = state.message
+
+                Timber.e(state.message)
             }
         }
     }

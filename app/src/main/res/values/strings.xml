@@ -20,8 +20,11 @@
 
     <!-- Episode Strings -->
     <string name="msg_episode_season_number">Season %1$d</string>
-    <string name="msg_episode__number">EP%1$d</string>
+    <string name="msg_episode_number">EP%1$d</string>
     <string name="msg_episode_air_date">Air Date: %1$s</string>
+
+    <!-- Locations String -->
+    <string name="msg_location_dimension">Dimension: %1$s</string>
 
     <!-- Error Strings -->
     <string name="error_generic_message">An Error has occurred!</string>

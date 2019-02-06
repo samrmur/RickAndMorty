@@ -2,7 +2,6 @@ package com.saam.rickandmorty.api.services
 
 import com.saam.rickandmorty.api.models.Episode
 import com.saam.rickandmorty.api.models.EpisodePage
-import io.reactivex.Observable
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,5 +19,5 @@ interface EpisodesService {
     @GET("episode/{id}")
     fun getEpisode(
             @Path("id") episodeId: Int
-    ): Observable<List<Episode>>
+    ): Deferred<List<Episode>>
 }

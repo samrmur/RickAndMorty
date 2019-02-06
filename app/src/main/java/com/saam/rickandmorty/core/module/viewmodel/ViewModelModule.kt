@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.saam.rickandmorty.characters.presentation.CharactersViewModel
 import com.saam.rickandmorty.episodes.presentation.EpisodesViewModel
+import com.saam.rickandmorty.locations.presentation.LocationsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -22,4 +23,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EpisodesViewModel::class)
     internal abstract fun providesEpisodesViewModel(viewModel: EpisodesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LocationsViewModel::class)
+    internal abstract fun providesLocationsViewModel(viewModel: LocationsViewModel): ViewModel
 }

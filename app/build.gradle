@@ -63,14 +63,8 @@ dependencies {
     kapt libraries.daggerProcessor
     kapt libraries.daggerAndroidApt
 
-    implementation libraries.rxKotlin
-    implementation libraries.rxAndroid
-    implementation libraries.rxAdapter
-
     implementation libraries.timber
-
-    implementation libraries.picasso
-    implementation libraries.circleImage
+    implementation libraries.fresco
 
     implementation libraries.okhttpLogger
     implementation libraries.retrofit

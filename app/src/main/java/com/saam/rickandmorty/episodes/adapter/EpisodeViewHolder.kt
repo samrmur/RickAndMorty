@@ -27,7 +27,7 @@ class EpisodeViewHolder(view: View): GenericViewHolder<Episode>(view) {
 
         itemView.header.text = resources.getString(R.string.msg_episode_season_number, model?.season)
         itemView.name.text = model?.name
-        itemView.episode_number.text = resources.getString(R.string.msg_episode__number, model?.number)
+        itemView.episode_number.text = resources.getString(R.string.msg_episode_number, model?.number)
         itemView.air_date.text = resources.getString(R.string.msg_episode_air_date, model?.airDate)
     }
 }
