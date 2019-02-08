@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface CharactersService {
     @GET("character/")
-    fun getCharactersByPage(
+    fun getCharactersByPageAsync(
         @Query("page") pageNum: Int,
         @Query("name") name: String? = null,
         @Query("status") status: String? = null,
@@ -18,11 +18,8 @@ interface CharactersService {
         @Query("gender") gender: String? = null
     ): Deferred<CharacterPage>
 
-    @GET("character/")
-    fun getCharactersByPageAsync(@Query("page") pageNum: Int): Deferred<CharacterPage>
-
-    @GET("character/{id}")
-    fun getCharacter(
-        @Path("id") characterId: Int
+    @GET("character/{ids}")
+    fun getCharactersByIdAsync(
+        @Path("ids") characterIds: String
     ): Deferred<List<Character>>
 }

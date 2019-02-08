@@ -2,7 +2,7 @@ ext {
     versions = [
             // Project Versions
             java                : JavaVersion.VERSION_1_8,
-            gradle              : '3.3.0',
+            gradle              : '3.3.1',
             minSdk              : 26,
             compileSdk          : 28,
             targetSdk           : 28,
@@ -80,6 +80,7 @@ ext {
             // Testing dependencies
             junit               : "junit:junit:${versions.junit}",
             mockito             : "org.mockito:mockito-core:${versions.mockito}",
+            mockWebServer       : "com.squareup.okhttp3:mockwebserver:${versions.okhttp}",
             testRunner          : "com.android.support.test:runner:${versions.testRunner}",
             testEspresso        : "com.android.support.test.espresso:espresso-core:${versions.testEspresso}"
     ]

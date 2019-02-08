@@ -1,9 +1,9 @@
 package com.saam.rickandmorty.nav.presentation
 
 import com.saam.rickandmorty.R
-import com.saam.rickandmorty.characters.ui.CharactersFragment
-import com.saam.rickandmorty.episodes.ui.EpisodesFragment
-import com.saam.rickandmorty.locations.ui.LocationsFragment
+import com.saam.rickandmorty.characterslist.ui.CharactersFragment
+import com.saam.rickandmorty.episodeslist.ui.EpisodesFragment
+import com.saam.rickandmorty.locationslist.ui.LocationsFragment
 import com.saam.rickandmorty.nav.ui.NavActivity
 import com.saam.rickandmorty.util.extensions.replaceFragment
 

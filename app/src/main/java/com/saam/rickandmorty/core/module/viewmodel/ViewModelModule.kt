@@ -2,9 +2,9 @@ package com.saam.rickandmorty.core.module.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.saam.rickandmorty.characters.presentation.CharactersViewModel
-import com.saam.rickandmorty.episodes.presentation.EpisodesViewModel
-import com.saam.rickandmorty.locations.presentation.LocationsViewModel
+import com.saam.rickandmorty.characterslist.presentation.CharactersViewModel
+import com.saam.rickandmorty.episodeslist.presentation.EpisodesViewModel
+import com.saam.rickandmorty.locationslist.presentation.LocationsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

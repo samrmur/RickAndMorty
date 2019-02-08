@@ -16,8 +16,8 @@ interface LocationsService {
         @Query("type") type: String? = null
     ): Deferred<LocationPage>
 
-    @GET("location/{id}")
-    fun getLocation(
-        @Path("id") locationId: Int
+    @GET("location/{ids}")
+    fun getLocationsByIdAsync(
+        @Path("ids") locationIds: String
     ): Deferred<List<Location>>
 }

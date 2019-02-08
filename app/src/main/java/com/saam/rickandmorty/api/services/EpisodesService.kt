@@ -16,8 +16,8 @@ interface EpisodesService {
             @Query("episode") episode: String? = null
     ): Deferred<EpisodePage>
 
-    @GET("episode/{id}")
-    fun getEpisode(
-            @Path("id") episodeId: Int
+    @GET("episode/{ids}")
+    fun getEpisodesByIdAsync(
+            @Path("ids") episodeIds: String
     ): Deferred<List<Episode>>
 }
